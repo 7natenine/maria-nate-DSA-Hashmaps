@@ -90,3 +90,123 @@ const WhatDoesThisDo = function(){
 
 console.log (duplicates('google')); 
 
+
+//#5. 
+
+// function Palindrome(str) {
+   
+//     for (let i = str.length; i>0; i--) {
+
+//         if(str === str.split('').reverse().join('')){
+//             return 'palindrome!'
+
+//         }
+//         else return 'not a palindrome'
+//     }
+// }
+
+// console.log(Palindrome('dad'))
+
+
+const palindrome = (string) => {
+    const obj = {};
+    let odd = 0;
+    for (let i = 0; i<string.length; i++) {
+      let word = string[i];
+      if (obj[word] === undefined) {
+        obj[word] = 1;
+      }
+      else {
+        obj[word]++;
+      }
+    } 
+    for (let key in obj) {
+      if (obj[key] % 2 !== 0) {
+        odd++;
+      }
+      if (odd > 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  console.log(palindrome('north')) // false
+  console.log(palindrome('acecarr'))//true
+
+
+
+
+  //#6. Write an algorithm to group a list of words into anagrams.
+  // For example, if the input was ['east', 'cars', 'acre', 'arcs', 
+  //'teas', 'eats', 'race'], the output should be: [['east', 'teas', 
+  //'eats'], ['cars', 'arcs'], ['acre', 'race']].
+
+  function uniform(str) {
+    return str.split('').sort().join('');
+};
+
+console.log(uniform('east')) // aest
+
+  let groupAnagrams = function(strs) {
+    let map = new Map();
+    for (let i of strs) {
+        const alpha = uniform(i);
+        let list = map.get(alpha) || [];
+        list.push(i);
+        map.set(alpha, list);
+    }
+
+    //Array.from() method creates a new, shallow-copied Array instance from an array-like or iterable object.
+    return Array.from(map.values());
+};
+
+console.log(groupAnagrams(['east', 'cars', 'acre', 'arcs','teas', 'eats', 'race']))
+
+
+
+
+  //#7
+  const str = ['east', 'cars', 'acre', 'arcs','teas', 'eats', 'race']
+  function anagramGroup(str) {
+      // create an empty hash map 
+    let hashMap = {};
+
+    //loop through each string and split each string into an array of letters, alphabetize 
+    // each array and sort the letters in each array 
+    // i.e: 
+    // east will be  [a,e,s,t] , we save this into  a varaiable called letter 
+    str.forEach( str => {
+        let letter = str.split('').sort();
+    // Now we use a teranry function to push the letters into a hash or if the hash is already 
+    // there, we push the string into the value of the hash map key
+        if(hashMap[letter]){
+            hashMap[letter].push(str)
+        } 
+        // push value into the hash 
+        else hashMap[letter] = [str] 
+    })  
+
+    //NOW : hash should look like this : 
+    // {
+    //     'a,e,t' : ['eat', 'tea', 'ate'],
+    //     'a,n,t' : ['tan', 'nat'],
+    //     'a,b,t' : ['bat']
+    //     }
+
+    // This formats the output so it can return 3 arrays of values only 
+    // hence: put the keys into an array 
+    // map over the keys, but return the values only 
+     const keys = Object.keys(hashMap);
+     const values = keys.map(
+         function(x) {
+             return hashMap[x]
+         }
+     )
+     
+       return values;    
+    }
+    // console.log(anagramGroup(str));
+  
+
+
